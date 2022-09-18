@@ -128,7 +128,7 @@ function renderProducts(product) {
 
 //Maquetacion del banner que se despliega con la informacion del producto al cual se da click
 function renderSpecification(product) {
-    for (product of productList) {
+    for (const product of productList) {
         const iconClose = document.createElement('div');
         iconClose.classList.add('product-specific-close');
         const iconCloseImg = document.createElement('img');
