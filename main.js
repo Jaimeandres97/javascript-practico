@@ -1,5 +1,8 @@
 //Lista de productos
 const productList = [];
+//Lista carrito compras
+const shoppingList = [];
+
 productList.push({
 	name: 'Bike',
 	price: '120',
@@ -23,10 +26,6 @@ productList.push({
 		'https://images.pexels.com/photos/47354/the-ball-stadion-football-the-pitch-47354.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
 	description: 'The new football ball of the world cup',
 });
-
-//Lista carrito compras
-shoppingList = [];
-
 //email que se oprime para desplegar el menu
 const menuEmail = document.querySelector('.navbar-email');
 //menu que se despliega al oprimir el email
@@ -45,6 +44,8 @@ const cardsContainer = document.querySelector('.cards-container');
 const productDetailContainer = document.querySelector('.product-specific');
 //boton para cerrar el menu de la informacion especifica del producto
 const productDetailClose = document.querySelector('.product-specific-close');
+//boton para cerrar el menu del carro de compras al oprimir la flecha de regreso
+const returnArrowImg = document.querySelector('.close-arrow');
 
 //abre y cierra el menu desktop cuando se hace click
 menuEmail.addEventListener('click', toggleDesktopMenu);
@@ -52,6 +53,8 @@ menuEmail.addEventListener('click', toggleDesktopMenu);
 menuHamIcon.addEventListener('click', toggleMobileMenu);
 //abre y cierra el menu del carrito de compras cuando se hace click
 menuCartIcon.addEventListener('click', toggleCartMenu);
+//Cierra el menu del carro de compras al oprimir la flecha de regreso
+returnArrowImg.addEventListener('click', toggleCartMenu);
 
 //Despliega el menu al oprimir el email en el menu desktop
 function toggleDesktopMenu() {
@@ -117,8 +120,8 @@ function closeProductDetailAside() {
 }
 
 //Maquetacion de productos en la lista del contenedor principal de la pagina
-function renderProducts(productList) {
-	for (let product of productList) {
+function renderProducts(products) {
+	for (let product of products) {
 		const productCard = document.createElement('div');
 		productCard.classList.add('product-card');
 		const img = document.createElement('img');
@@ -142,7 +145,6 @@ function renderProducts(productList) {
 		const productInfoFigure = document.createElement('figure');
 		const productInfoFigureImg = document.createElement('img');
 		productInfoFigureImg.setAttribute('src', './icons/bt_add_to_cart.svg');
-
 		
 		function shoppingListItems() {
 			shoppingList.push(product);
@@ -163,20 +165,7 @@ function renderProducts(productList) {
 //Maquetacion menu carrito de compras
 function renderCartMenu() {
 	
-		//Elemento Title container
-		const titleContainer = document.createElement('div');
-		titleContainer.classList.add('title-container');
-		const returnArrowImg = document.createElement('img');
-		returnArrowImg.setAttribute('src', './icons/flechita.svg');
-		returnArrowImg.setAttribute('alt', 'arow');
-		returnArrowImg.addEventListener('click', toggleCartMenu);
-		const title = document.createElement('p');
-		title.classList.add('title');
-		title.innerText = "My order";
 
-		titleContainer.append(returnArrowImg, title);
-
-		//Elemento my order content
 		const myOrderContent = document.createElement('div');
 		myOrderContent.classList.add('my-order-content');
 		const shoppingCart = document.createElement('div');
@@ -191,15 +180,8 @@ function renderCartMenu() {
 		const deleteProduct = document.createElement('img');
 		deleteProduct.setAttribute('src','./icons/icon_close.png');
 		deleteProduct.setAttribute('alt','close');
-
-
-		
-
-
-
 		productFigure.append(productImg);
 		shoppingCart.append(productFigure,productName,productPrice,deleteProduct);
-
 			//Elemento order
 		const order = document.createElement('div');
 		order.classList.add('order');
@@ -218,7 +200,7 @@ function renderCartMenu() {
 
 		myOrderContent.append(shoppingCart, order, primaryButton);
 
-		cartIconMenu.append(titleContainer, myOrderContent);
+		cartIconMenu.append(myOrderContent);
 	
 	
 }
@@ -251,6 +233,8 @@ function renderSpecification() {
 	const buttonImg = document.createElement('img');
 	buttonImg.setAttribute('src', './icons/bt_add_to_cart.svg');
 	buttonImg.setAttribute('alt', 'add to cart');
+
+
 
 	//Union de los elementos
 	productInfo.append(
