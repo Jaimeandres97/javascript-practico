@@ -278,6 +278,7 @@ nav {
 	font-size: var(--md);
 	font-weight: bold;
 	height: 50px;
+	margin-bottom: 24px;
 }
 
 /*Product List*/
@@ -334,7 +335,6 @@ nav {
 
 .product-specific {
 	width: 360px;
-	padding-bottom: 24px;
 	position: absolute;
 	right: 0;
 	background: var(--white);
