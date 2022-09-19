@@ -58,7 +58,7 @@ function toggleCartMenu() {
 	productDetailContainer.classList.add('inactive');
 	cartIconMenu.classList.toggle('inactive');
 }
-//Abre el banner de informacion de producto al dar click en la imagen
+//Abre el banner de informacion de producto al dar click en la imagen, recibe como parametro el producto que se selecciona
 function openProductDetailAside(product) {
 	console.log({ product });
 	mobileMenu.classList.add('inactive');
@@ -66,15 +66,16 @@ function openProductDetailAside(product) {
 	cartIconMenu.classList.add('inactive');
 	productDetailContainer.classList.remove('inactive');
 
+    //Crea la informacion del producto que se selecciona en pantalla
 	const productImg = document.querySelector('.product-specific__img');
 	const productInfoPrice = document.querySelector('.product-specific__price');
-	//const productInfoName = ;
-	//const productInfoDescription = ;
-
+	const productInfoName = document.querySelector('.product-specific__name');
+	const productInfoDescription = document.querySelector('.product-specific__description');
+    //Da el valor a las propiedades del producto que se crea a partir del producto que recibe como parametro
 	productImg.setAttribute('src', product.image);
-	// productInfoName.innerText = product.name;
+	productInfoName.innerText = product.name;
 	productInfoPrice.innerText = '$' + product.price;
-	// productInfoDescription.innerText = product.description;
+	productInfoDescription.innerText = product.description;
 }
 //Cierra el banner de informacion de producto al dar click en la X
 function closeProductDetailAside() {
@@ -118,12 +119,14 @@ function renderProducts(productList) {
 		const img = document.createElement('img');
 		img.setAttribute('src', product.image);
 		//Abre el banner de detalle de productos
-
+        //Actualiza los detalles del producto que se selecciona en el menu
 		function updateProductSpefication() {
+            //Es la funcion declarada para abir el banner, recibe como parametro el producto seleccionado del listado
 			openProductDetailAside(product);
 		}
-
+        //Abre el menu del producto seleccionado 
 		img.addEventListener('click', updateProductSpefication);
+
 		const productInfo = document.createElement('div');
 		productInfo.classList.add('product-info');
 		const productInfoDiv = document.createElement('div');
@@ -149,21 +152,21 @@ function renderSpecification() {
 	const iconClose = document.createElement('div');
 	iconClose.classList.add('product-specific-close');
 	const iconCloseImg = document.createElement('img');
-
 	iconCloseImg.setAttribute('src', './icons/icon_close.png');
 	//Cierra el banner cuando se le da click a la imagen de X
 	iconClose.addEventListener('click', closeProductDetailAside);
+
 	const productImg = document.createElement('img');
 	productImg.className = 'product-specific__img';
-
 	productImg.setAttribute('alt', 'Product image');
 	const productInfo = document.createElement('div');
 	productInfo.classList.add('product-specific-info');
 	const productInfoPrice = document.createElement('p');
 	productInfoPrice.classList.add('product-specific__price');
-
 	const productInfoName = document.createElement('p');
+    productInfoName.classList.add('product-specific__name');
 	const productInfoDescription = document.createElement('p');
+    productInfoDescription.classList.add('product-specific__description');
 
 	const addButton = document.createElement('button');
 	addButton.classList.add('primary-button');
