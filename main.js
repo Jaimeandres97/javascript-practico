@@ -90,18 +90,7 @@ function toggleCartMenu() {
 	desktopMenu.classList.add('inactive');
 	productDetailContainer.classList.add('inactive');
 	cartIconMenu.classList.toggle('inactive');
-	//renderCartMenu(shoppingList);
-	for(let product of shoppingList) {
-		//Crea la informacion del producto que se selecciona en pantalla
-		const productImg = document.querySelector('.product__img');
-		const productInfoPrice = document.querySelector('.product__price');
-		const productInfoName = document.querySelector('.product__name');
-		
-		//Da el valor a las propiedades del producto que se crea a partir del producto que recibe como parametro
-		productImg.setAttribute('src', product.image);
-		productInfoName.innerText = product.name;
-		productInfoPrice.innerText = '$' + product.price;
-	}
+	
 }
 //Abre el banner de informacion de producto al dar click en la imagen, recibe como parametro el producto que se selecciona
 function openProductDetailAside(product) {
@@ -110,6 +99,17 @@ function openProductDetailAside(product) {
 	desktopMenu.classList.add('inactive');
 	cartIconMenu.classList.add('inactive');
 	productDetailContainer.classList.remove('inactive');    
+
+	//Crea la informacion del producto que se selecciona en pantalla
+	const productImg = document.querySelector('.product-specific__img');
+	const productInfoPrice = document.querySelector('.product-specific__price');
+	const productInfoName = document.querySelector('.product-specific__name');
+	const productInfoDescription = document.querySelector('.product-specific__description');
+    //Da el valor a las propiedades del producto que se crea a partir del producto que recibe como parametro
+	productImg.setAttribute('src', product.image);
+	productInfoName.innerText = product.name;
+	productInfoPrice.innerText = '$' + product.price;
+	productInfoDescription.innerText = product.description;
 }
 //Cierra el banner de informacion de producto al dar click en la X
 function closeProductDetailAside() {
@@ -131,6 +131,7 @@ function renderProducts(products) {
 		function updateProductSpefication() {
             //Es la funcion declarada para abir el banner, recibe como parametro el producto seleccionado del listado
 			openProductDetailAside(product);
+
 		}
         //Abre el menu del producto seleccionado 
 		img.addEventListener('click', updateProductSpefication);
@@ -149,6 +150,7 @@ function renderProducts(products) {
 		function shoppingListItems() {
 			shoppingList.push(product);
 			console.log(shoppingList);
+			renderCartMenu();
 		}
 
 		productInfoFigure.addEventListener('click', shoppingListItems);
@@ -163,11 +165,11 @@ function renderProducts(products) {
 }
 //Maquetacion menu carrito de compras
 function renderCartMenu() {
-	
+	if(shoppingList.length>0) {
 		const myOrderContent = document.createElement('div');
 		myOrderContent.classList.add('my-order-content');
 		const shoppingCart = document.createElement('div');
-		shoppingCart.classList.add('shopping-cart');
+		shoppingCart.classList.add('shopping-cart',);
 		const productFigure = document.createElement('figure');
 		const productImg = document.createElement('img');
 		productImg.classList.add('product__img');
@@ -180,7 +182,13 @@ function renderCartMenu() {
 		deleteProduct.setAttribute('alt','close');
 		productFigure.append(productImg);
 		shoppingCart.append(productFigure,productName,productPrice,deleteProduct);
-		
+		//renderCartMenu(shoppingList);
+		for(let product of shoppingList) {
+			//Da el valor a las propiedades del producto que se crea a partir del producto que recibe como parametro
+			productImg.setAttribute('src', product.image);
+			productName.innerText = product.name;
+			productPrice.innerText = '$' + product.price;
+		}
 		//Elemento order
 		const order = document.createElement('div');
 		order.classList.add('order');
@@ -195,9 +203,12 @@ function renderCartMenu() {
 		const primaryButton = document.createElement('button');
 		primaryButton.classList.add('primary-button');
 		primaryButton.innerText = "Checkout";
-		myOrderContent.append(shoppingCart, order, primaryButton);
+		myOrderContent.append(shoppingCart);
 		cartIconMenu.append(myOrderContent);
+		cartIconMenu.append(order, primaryButton);
 	
+	}
+		
 }
 
 //Maquetacion del banner que se despliega con la informacion del producto al cual se da click
