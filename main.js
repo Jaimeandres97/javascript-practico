@@ -150,11 +150,28 @@ function renderProducts(products) {
 		function shoppingListItems() {
 			shoppingList.push(product);
 			console.log(shoppingList);
+			//Suma elementos del Array shoppingList
+			function sumListItems() {
+				let sumItems = [];
+			for(let i = 0; i < shoppingList.length; i++) {
+				sumItems.push(parseInt(shoppingList[i].price))
+			}
+			let sum = sumItems.reduce((a, b) => a + b, 0);
+			return sum;
+			}
+			//Cambia el mensaje de carrito vacio
+			const productInfo = document.querySelector('.cart__default');
+			productInfo.innerText = 'Total';
+			const productInfoPrice = document.querySelector('.total__price');
+			productInfoPrice.innerText = '$' + sumListItems();
+			//Activa el boton de Checkout
+			const primaryButton = document.querySelector('.primary-button');
+			primaryButton.classList.remove('inactive');
+
 			renderCartMenu();
 		}
 
 		productInfoFigure.addEventListener('click', shoppingListItems);
-
 		//Union de los elementos
 		productInfoFigure.append(productInfoFigureImg);
 		productInfoDiv.append(productInfoPrice, productInfoName);
@@ -189,26 +206,29 @@ function renderCartMenu() {
 			productName.innerText = product.name;
 			productPrice.innerText = '$' + product.price;
 		}
-		//Elemento order
-		const order = document.createElement('div');
-		order.classList.add('order');
-		const nameContainer = document.createElement('p');
-		const nameSpan = document.createElement('span');
-		nameSpan.innerText = "Total";
-		const totalPrice = document.createElement('p');
-		totalPrice.classList.add('total__price');
-		nameContainer.append(nameSpan)
-		order.append(nameContainer,totalPrice)
-		//Elemento button
-		const primaryButton = document.createElement('button');
-		primaryButton.classList.add('primary-button');
-		primaryButton.innerText = "Checkout";
 		myOrderContent.append(shoppingCart);
 		cartIconMenu.append(myOrderContent);
-		cartIconMenu.append(order, primaryButton);
-	
 	}
 		
+}
+//Crea los elementos del Total y boton checkout del CartMenu
+function renderCartMenuBottom() {
+	//Elemento order
+	const order = document.createElement('div');
+	order.classList.add('order');
+	const nameContainer = document.createElement('p');
+	const nameSpan = document.createElement('span');
+	nameSpan.classList.add('cart__default')
+	nameSpan.innerText = "You have not added items to the cart";
+	const totalPrice = document.createElement('p');
+	totalPrice.classList.add('total__price');
+	nameContainer.append(nameSpan)
+	order.append(nameContainer,totalPrice)
+	//Elemento button
+	const primaryButton = document.createElement('button');
+	primaryButton.classList.add('primary-button', 'inactive');
+	primaryButton.innerText = "Checkout";
+	cartIconMenu.append(order, primaryButton);
 }
 
 //Maquetacion del banner que se despliega con la informacion del producto al cual se da click
@@ -237,6 +257,7 @@ function renderSpecification() {
 	const buttonImg = document.createElement('img');
 	buttonImg.setAttribute('src', './icons/bt_add_to_cart.svg');
 	buttonImg.setAttribute('alt', 'add to cart');
+	
 	//Union de los elementos
 	productInfo.append(
 		productInfoPrice,
@@ -249,5 +270,5 @@ function renderSpecification() {
 }
 
 renderProducts(productList);
-renderCartMenu();
+renderCartMenuBottom();
 renderSpecification();
